@@ -1,0 +1,70 @@
+[gd_scene load_steps=7 format=3 uid="uid://jkxe4d8qm1nd"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/Player/Link.gd" id="1_36oca"]
+[ext_resource type="Texture2D" uid="uid://e5k7ejmlwprq" path="res://Assets/Graphics/Characters/Link.png" id="1_atesd"]
+
+[sub_resource type="Animation" id="Animation_dbovk"]
+resource_name = "Idle"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LinkBody/LinkSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_l318b"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LinkBody/LinkSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jxad7"]
+_data = {
+"Idle": SubResource("Animation_dbovk"),
+"RESET": SubResource("Animation_l318b")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ofppg"]
+size = Vector2(22, 22)
+
+[node name="Link" type="Node2D"]
+
+[node name="LinkBody" type="CharacterBody2D" parent="."]
+script = ExtResource("1_36oca")
+
+[node name="LinkSprite" type="Sprite2D" parent="LinkBody"]
+texture_filter = 1
+texture = ExtResource("1_atesd")
+
+[node name="LinkAnimations" type="AnimationPlayer" parent="LinkBody"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_jxad7")
+}
+
+[node name="Link Collider" type="CollisionShape2D" parent="LinkBody"]
+position = Vector2(0, 6)
+shape = SubResource("RectangleShape2D_ofppg")
+
+[node name="TransitionArea" type="Area2D" parent="LinkBody"]
+
+[node name="TransitionCollider" type="CollisionShape2D" parent="LinkBody/TransitionArea"]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_ofppg")
